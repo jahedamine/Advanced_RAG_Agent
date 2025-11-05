@@ -1,0 +1,9 @@
+# Contenu de documentation_interne.txt
+Politique de Remboursement :
+Les remboursements pour les produits physiques doivent être demandés dans les 30 jours suivant l'achat. Un code de retour (RMA) est obligatoire. Le service de remboursement prend en moyenne 5 jours ouvrables pour traiter la demande. Les produits numériques ne sont pas remboursables, sauf erreur de facturation.
+
+Spécifications du Serveur GenAI :
+Le serveur de production LLM utilise des GPU NVIDIA H100 pour la latence. Le modèle déployé est Mistral 7B. Il est optimisé avec un débit de 120 tokens par seconde. La maintenance mensuelle est prévue chaque troisième dimanche du mois, de 2h à 4h du matin (CET).
+
+Contact & Support :
+Pour toute question technique, contacter l'équipe 'TechOps' via Slack (#techops-support). Pour les questions financières ou les factures, envoyer un email à comptabilite@entreprise.com.
