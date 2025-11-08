@@ -17,7 +17,9 @@ Le pipeline RAG est structuré autour de **trois composants principaux**, visant
 
 - **Chaîne LCEL**  
   Le **LangChain Expression Language** assemble le Retriever et le LLM pour forcer le modèle à répondre uniquement avec le contexte récupéré, validant ainsi la compétence RAG.
-
+  
+###  Exposition publique avec Ngrok (optionnel)
+Si vous utilisez Google Colab ou un environnement local sans accès direct au réseau, vous pouvez exposer l'API FastAPI via [Ngrok](https://ngrok.com/).
 ---
 
 ## Validation du Projet (Google Colab)
@@ -61,4 +63,8 @@ Le notebook `agent_pipeline_colab.ipynb` prouve la bonne exécution du pipeline 
 ## 🐍 Déploiement local
 ```bash
 pip install -r requirements.txt
-uvicorn app:app --reload
+pip install pyngrok
+nohup uvicorn app:app --host 0.0.0.0 --port 8000 &
+from pyngrok import ngrok
+public_url = ngrok.connect(8000)
+print("🔗 URL publique :", public_url)
