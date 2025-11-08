@@ -1,12 +1,11 @@
-# 🤖 Advanced RAG Agent (Retrieval-Augmented Generation)
+# Advanced RAG Agent (Retrieval-Augmented Generation)
 
-Ce dépôt contient le code du **Projet** : Construction d'un Agent RAG (Retrieval-Augmented Generation) avancé pour interroger une documentation interne à l'aide d'un Large Language Model (LLM) en environnement local et/ou cloud.
-
-Le projet a été validé en utilisant l'architecture moderne **LCEL (LangChain Expression Language)** pour construire une chaîne RAG performante et prouver la capacité du système à filtrer les connaissances générales.
+Ce dépôt contient le code du **Projet** ADVANCED_RAG_AGENT : Agent RAG avancé capable de répondre à des questions complexes à partir de documents internes (PDF, DOCX, TXT…). Contrairement aux chatbots classiques, il utilise une architecture Retrieval-Augmented Generation (RAG) avec LangChain, recherche vectorielle et LLM pour générer des réponses précises, contextuelles et modulaires. Exposé en API et Dockerisé, il incarne une intelligence documentaire prête à l’emploi.
+Le projet a été validé en utilisant l'architecture moderne LCEL (LangChain Expression Language) pour construire une chaîne RAG performante et prouver la capacité du système à filtrer les connaissances générales.
 
 ---
 
-## 🧠 Architecture du Système
+## Architecture du Système
 
 Le pipeline RAG est structuré autour de **trois composants principaux**, visant à fournir des réponses précises et contextualisées :
 
@@ -21,7 +20,7 @@ Le pipeline RAG est structuré autour de **trois composants principaux**, visant
 
 ---
 
-## ✅ Validation du Projet (Google Colab)
+## Validation du Projet (Google Colab)
 
 En raison des contraintes de mémoire (RAM/VRAM insuffisante pour les gros modèles) sur l'environnement local, le projet a été validé avec succès sur **Google Colab (GPU T4)**.
 
@@ -35,15 +34,22 @@ Le notebook `agent_pipeline_colab.ipynb` prouve la bonne exécution du pipeline 
 
 ---
 
-## 🚀 Comment Exécuter le Projet
+## Fonctionnalités
+- Chunking + vectorisation locale via FAISS
+- Récupération contextuelle avec LangChain
+- Génération de réponse via Mistral-7B-Instruct
+- Exposition API via FastAPI
+- Dockerisation pour déploiement
 
-### 🔑 Fichiers Clés
+## Comment Exécuter le Projet
+
+### Fichiers Clés
 
 - `agent_pipeline_colab.ipynb` : Notebook de validation fonctionnel (méthode recommandée)  
 - `documentation_interne.txt` : Fichier source de la documentation  
 - `requirements.txt` : Liste des dépendances Python
 
-### 🧪 Instructions Colab
+### Instructions Colab
 
 1. Ouvrir le fichier `agent_pipeline_colab.ipynb` dans [Google Colab](https://colab.research.google.com).
 2. Activer l'accélérateur matériel **T4 GPU**.
@@ -52,12 +58,7 @@ Le notebook `agent_pipeline_colab.ipynb` prouve la bonne exécution du pipeline 
 
 ---
 
-## 📂 Auteur
-
-Projet réalisé par **Amine**, ingénieur GenAI spécialisé en alignement, agentique et déploiement local/cloud.  
-Ce projet fait partie d’un programme de consolidation en 5 modules GenAI Engineering.
-
----
-
-Tu veux que je t’aide à rédiger la section "License" ou "Contributions" pour compléter ton dépôt ?  
-**Ce README est plus qu’un fichier — c’est la vitrine de ton agent cognitif.** 🧠📂🚀
+## 🐍 Déploiement local
+```bash
+pip install -r requirements.txt
+uvicorn app:app --reload
