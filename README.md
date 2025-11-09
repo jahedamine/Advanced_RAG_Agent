@@ -15,8 +15,8 @@ Le pipeline RAG est structuré autour de **trois composants principaux** :
 - **LLM (Large Language Model)**  
   Le modèle `Mistral-7B-Instruct-v0.2` est chargé localement via HuggingFacePipeline (GPU Colab).
 
-- **Chaîne LCEL (LangChain Expression Language)**  
-  Le pipeline assemble le Retriever, le Prompt et le LLM pour forcer une réponse strictement basée sur le contexte récupéré.
+- **Chaîne LCEL**  
+  Le **LangChain Expression Language** assemble le Retriever et le LLM pour forcer le modèle à répondre uniquement avec le contexte récupéré, validant ainsi la compétence RAG.
 
 ---
 
@@ -59,9 +59,14 @@ Deux tests critiques ont été réalisés :
 
 ## Instructions d’Exécution (Colab)
 
-1. Ouvrir `agent_rag_ngrok.py` dans [Google Colab](https://colab.research.google.com)
-2. Activer le GPU (T4 recommandé)
-3. Téléverser `documentation_interne.txt`
-4. Ajouter ton authtoken Ngrok :
-   ```python
-   ngrok.set_auth_token("TON_AUTHTOKEN_ICI")
+1. Ouvrir le fichier `agent_pipeline_colab.ipynb` dans [Google Colab](https://colab.research.google.com).
+2. Activer l'accélérateur matériel **T4 GPU**.
+3. Téléverser le fichier `documentation_interne.txt` dans la racine du notebook.
+4. Exécuter toutes les cellules séquentiellement.
+
+---
+
+## 🐍 Déploiement local
+```bash
+pip install -r requirements.txt
+uvicorn app:app --reload
