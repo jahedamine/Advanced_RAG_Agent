@@ -1,64 +1,67 @@
-# Advanced RAG Agent (Retrieval-Augmented Generation)
+# Advanced RAG Agent API (FastAPI + Mistral + LCEL)
 
-Ce dépôt contient le code du **Projet** ADVANCED_RAG_AGENT : Agent RAG avancé capable de répondre à des questions complexes à partir de documents internes (PDF, DOCX, TXT…). Contrairement aux chatbots classiques, il utilise une architecture Retrieval-Augmented Generation (RAG) avec LangChain, recherche vectorielle et LLM pour générer des réponses précises, contextuelles et modulaires. Exposé en API et Dockerisé, il incarne une intelligence documentaire prête à l’emploi.
-Le projet a été validé en utilisant l'architecture moderne LCEL (LangChain Expression Language) pour construire une chaîne RAG performante et prouver la capacité du système à filtrer les connaissances générales.
+Ce dépôt contient le code du **Projet** ADVANCED_RAG_AGENT_API : un agent RAG avancé exposé en API REST, capable de répondre à des questions complexes à partir d’un corpus documentaire interne (`documentation_interne.txt`).  
+Contrairement aux assistants classiques, il utilise une architecture **Retrieval-Augmented Generation (RAG)** avec LangChain LCEL, FAISS, embeddings HuggingFace et le modèle Mistral 7B pour générer des réponses précises, contextualisées et filtrées.
 
 ---
 
 ## Architecture du Système
 
-Le pipeline RAG est structuré autour de **trois composants principaux**, visant à fournir des réponses précises et contextualisées :
+Le pipeline RAG est structuré autour de **trois composants principaux** :
 
 - **Récupération (Retrieval)**  
-  Les données sont encodées à l'aide des embeddings `all-MiniLM-L6-v2` (Hugging Face) et stockées dans une base de données vectorielle **FAISS** (utilisée dans Colab).
+  Le corpus est chunké et vectorisé via `all-MiniLM-L6-v2`, puis indexé dans **FAISS**.
 
 - **LLM (Large Language Model)**  
-  Le modèle `Mistral-7B-Instruct` (via Hugging Face Pipeline sur GPU Colab) est utilisé pour le raisonnement.
+  Le modèle `Mistral-7B-Instruct-v0.2` est chargé localement via HuggingFacePipeline (GPU Colab).
 
-- **Chaîne LCEL**  
-  Le **LangChain Expression Language** assemble le Retriever et le LLM pour forcer le modèle à répondre uniquement avec le contexte récupéré, validant ainsi la compétence RAG.
+- **Chaîne LCEL (LangChain Expression Language)**  
+  Le pipeline assemble le Retriever, le Prompt et le LLM pour forcer une réponse strictement basée sur le contexte récupéré.
 
 ---
 
-## Validation du Projet (Google Colab)
+## Validation du Projet (Colab + Swagger)
 
-En raison des contraintes de mémoire (RAM/VRAM insuffisante pour les gros modèles) sur l'environnement local, le projet a été validé avec succès sur **Google Colab (GPU T4)**.
+Le projet a été validé dans **Google Colab (GPU T4)** avec exposition via **FastAPI + Ngrok**.  
+L’interface Swagger permet de tester l’agent en ligne via `/docs`.
 
-Le notebook `agent_pipeline_colab.ipynb` prouve la bonne exécution du pipeline à travers **deux tests critiques** :
+Deux tests critiques ont été réalisés :
 
-- **Question Interne (Succès RAG)**  
-  Le LLM répond correctement aux questions basées sur le contenu de `documentation_interne.txt`.
+- **Question interne (réussite)**  
+  → Le modèle répond correctement à une question sur la politique de remboursement.
 
-- **Question Générale (Échec contrôlé)**  
-  Le LLM refuse de répondre à une question hors-sujet, prouvant l'efficacité du mécanisme de filtrage du RAG.
+- **Question hors contexte (filtrage)**  
+  → Le modèle refuse poliment de répondre, prouvant l’efficacité du RAG.
 
 ---
 
 ## Fonctionnalités
+
 - Chunking + vectorisation locale via FAISS
-- Récupération contextuelle avec LangChain
-- Génération de réponse via Mistral-7B-Instruct
+- Récupération contextuelle avec LangChain LCEL
+- Génération via Mistral 7B Instruct
 - Exposition API via FastAPI
-- Dockerisation pour déploiement
-
-## Comment Exécuter le Projet
-
-### Fichiers Clés
-
-- `agent_pipeline_colab.ipynb` : Notebook de validation fonctionnel (méthode recommandée)  
-- `documentation_interne.txt` : Fichier source de la documentation  
-- `requirements.txt` : Liste des dépendances Python
-
-### Instructions Colab
-
-1. Ouvrir le fichier `agent_pipeline_colab.ipynb` dans [Google Colab](https://colab.research.google.com).
-2. Activer l'accélérateur matériel **T4 GPU**.
-3. Téléverser le fichier `documentation_interne.txt` dans la racine du notebook.
-4. Exécuter toutes les cellules séquentiellement.
+- Tunnel public via Ngrok
+- Interface Swagger (`/docs`)
+- Nettoyage post-génération (`Assistant:` → réponse propre)
+- Dockerisation possible
 
 ---
 
-## 🐍 Déploiement local
-```bash
-pip install -r requirements.txt
-uvicorn app:app --reload
+## Fichiers Clés
+
+- `agent_rag_ngrok.py` : Script principal de l’agent RAG exposé en API
+- `documentation_interne.txt` : Corpus documentaire interne
+- `requirements.txt` : Dépendances Python
+- `README.md` : Documentation du projet
+
+---
+
+## Instructions d’Exécution (Colab)
+
+1. Ouvrir `agent_rag_ngrok.py` dans [Google Colab](https://colab.research.google.com)
+2. Activer le GPU (T4 recommandé)
+3. Téléverser `documentation_interne.txt`
+4. Ajouter ton authtoken Ngrok :
+   ```python
+   ngrok.set_auth_token("TON_AUTHTOKEN_ICI")

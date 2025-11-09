@@ -1,21 +1,15 @@
 # Fichier requirements.txt pour l'Agent RAG Avancé
-
-# Framework LangChain et ses composants
-langchain
-langchain-core
-langchain-community
-langchain-huggingface
-
-# Base de données vectorielle utilisée en local (avec rag_indexer.py)
-chromadb
-
-# Base de données vectorielle utilisée pour la validation Colab (plus facile à installer)
-faiss-cpu
-
-# Composants Hugging Face pour le LLM (Mistral) et les embeddings
+langchain-core>=1.0.0
+langchain-text-splitters>=1.0.0
+langchain-community>=0.0.26
 transformers
 sentence-transformers
-
-# Dépendances pour le traitement GPU et l'optimisation
+faiss-cpu
 torch
 accelerate
+fastapi
+uvicorn
+pyngrok
+deep_translator
+requests==2.32.4
+langchain-huggingface
