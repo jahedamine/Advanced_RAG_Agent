@@ -66,7 +66,7 @@ Deux tests critiques ont été réalisés :
 
 ---
 
-## 🐍 Déploiement local
+## Déploiement local
 ```bash
 pip install -r requirements.txt
 uvicorn app:app --reload
